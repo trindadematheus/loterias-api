@@ -6,4 +6,5 @@ module.exports = async (req: any, res: any) => {
   const Route = new Hetter(req, res)
 
   Route.get('/megasena/:concurso', MegaSena.index)
+  Route.get('/federal/:concurso', MegaSena.index)
 }

@@ -1,31 +1,39 @@
 import axios from 'axios'
 import cheerio from 'cheerio'
 
-export default async function getMegaSenaResult(url: string) {
+export default async function getFederalResult(url: string) {
   const res = await axios(url)
   const html = res.data;
 
   const $ = cheerio.load(html);
 
   let result: any = {
-    tipoJogo: 'MEGA_SENA',
-    dezenas: [],
-    premiacoes: [],
-    acumulacoes: [],
+    tipoJogo: 'FEDERAL',
     resultadosAnteriores: []
   }
 
   const header = $('.lottery-totem__header').first()
   const mainCard = $('.lottery-totem__body__content.card').first()
-  const lastResults = $('.result-card.lot-mega-sena')
+  const lastResults = $('.result-card.lot-loteria-federal')
 
   result.dataApuracao = header.find('.result__draw-date > strong').text()
   result.concurso = header.find('.result__draw > strong').text()
   result.localSorteio = header.find('.result__local > div > strong').text()
   result.valor = header.find('.result__prize__value').text()
-  result.acumulou = mainCard.find('.text-center.text-uppercase.color-primary').length > 0
 
-  // PREMIAÇÕES
+  // RESULTADOS
+  let resultados = [];
+  mainCard
+    .find('.result__federal-item')
+    .each((_, element) => {
+      resultados.push({
+        posicao: $(element).find('strong').text(),
+        numero: $(element).find('.result__federal-item__val.lot-bg').text(),
+      })
+    })
+
+  // PREMIACOES
+  let premiacoes = [];
   mainCard
     .find('.result__table-prize tr')
     .each((idx, element) => {
@@ -52,27 +60,24 @@ export default async function getMegaSenaResult(url: string) {
           }
         })
 
-        result.premiacoes.push(line)
+        premiacoes.push(line)
       }
     })
 
-  // ACUMULAÇÕES
-  mainCard
-    .find('.result__acumulations > div')
-    .each((_, element) => {
-      result.acumulacoes.push({
-        titulo: $(element).find('strong').first().text(),
-        valor: $(element).find('.lot-color').first().text()
-      })
+  const resultadoCompleto = resultados.reduce((acc, res) => {
+    const finded = premiacoes.find(pre => pre.premiacao.includes(res.posicao))
+
+    if (!finded) return;
+
+    acc.push({
+      ...res,
+      ...finded
     })
 
-  // DEZENAS SORTEADAS
-  mainCard
-    .find('.result__tens-grid > .lot-bg-light > span')
-    .each((_, el) => {
-      result.dezenas.push($(el).text())
-    })
+    return acc;
+  }, [])
 
+  // ULTIMOS RESULTADOS
   lastResults.each((_, element) => {
     let line: any = {
       dezenas: []
@@ -82,7 +87,7 @@ export default async function getMegaSenaResult(url: string) {
     line.concurso = $(element).find('.result-card__header .text-right strong').text()
     line.valor = $(element).find('p strong').text()
 
-    $(element).find('.result__tens-grid > .lot-bg-light > span')
+    $(element).find('.result__federal-item__val.lot-bg')
       .each((_, el) => {
         line.dezenas.push($(el).text())
       })
@@ -90,6 +95,5 @@ export default async function getMegaSenaResult(url: string) {
     result.resultadosAnteriores.push(line)
   })
 
-  return result
+  return { ...result, resultados: resultadoCompleto }
 }
-
