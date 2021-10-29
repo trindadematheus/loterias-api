@@ -8,7 +8,7 @@ class MegaSenaController {
     const concurso = req.params.concurso;
 
     const result = await getMegaSenaResult(
-      concurso === 'lasted' ? MEGA_SENA_API : `${MEGA_SENA_API}/${concurso}`
+      concurso === 'last' ? MEGA_SENA_API : `${MEGA_SENA_API}/${concurso}`
     )
 
     return res.json(result)
