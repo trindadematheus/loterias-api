@@ -12,7 +12,7 @@ const port = 3000
 app.use(express.static("public"));
 app.use(morgan("tiny"));
 app.use(
-  "/docs",
+  "/api/docs",
   swaggerUi.serve,
   swaggerUi.setup(undefined, {
     swaggerOptions: {
@@ -27,7 +27,7 @@ app.get('/api/megasena/:concurso', async (req, res) => {
   res.json(response)
 })
 app.get('/api/federal/:concurso', async (req, res) => {
-  const respose = await Federal.index(req.params.concurso)
+  const response = await Federal.index(req.params.concurso)
 
   res.json(response)
 })
