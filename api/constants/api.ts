@@ -1,0 +1,1 @@
+export const MEGA_SENA_API = 'https://www.megaloterias.com.br/mega-sena/resultados'

@@ -6,7 +6,7 @@ import MegaSena from './controllers/MegaSena'
 const app = express()
 const port = 3000
 
-app.get('/megasena', (req, res) => {
+app.get('/megasena/:concurso', (req, res) => {
   //@ts-ignore
   MegaSena.index({ req, res })
 })
