@@ -15,6 +15,7 @@ app.use(
   "/api/docs",
   swaggerUi.serve,
   swaggerUi.setup(undefined, {
+    customCssUrl: 'https://unpkg.com/swagger-ui-dist@3.52.5/swagger-ui.css',
     swaggerOptions: {
       url: "/swagger.json",
     },
