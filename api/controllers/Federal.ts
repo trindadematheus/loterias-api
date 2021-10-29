@@ -1,17 +1,20 @@
-import { Request, Response } from 'express';
+import { Get, Path, Route, Tags } from 'tsoa';
 
 import { FEDERAL_API } from '../constants/api'
 import getFederalResult from '../services/getFederalResult';
 
+@Route('/api/federal')
+@Tags('Federal')
 class FederalController {
-  async index(req: Request, res: Response) {
-    const concurso = req.params.concurso;
 
-    const result = await getFederalResult(
+  /**
+   * use 'last' if you want get the last result
+   */
+  @Get("/:concurso")
+  async index(@Path() concurso: string): Promise<any> {
+    return await getFederalResult(
       concurso === 'last' ? FEDERAL_API : `${FEDERAL_API}/${concurso}`
     )
-
-    return res.json(result)
   }
 }
 

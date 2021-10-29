@@ -1,17 +1,20 @@
-import { Response, Request } from 'express'
+import { Route, Tags, Get, Path } from '@tsoa/runtime';
 
 import getMegaSenaResult from '../services/getMegaSenaResult'
 import { MEGA_SENA_API } from '../constants/api'
 
+@Route('/api/megasena')
+@Tags('Mega Sena')
 class MegaSenaController {
-  async index(req: Request, res: Response) {
-    const concurso = req.params.concurso;
 
-    const result = await getMegaSenaResult(
+  /**
+   * use 'last' if you want get the last result
+   */
+  @Get("/:concurso")
+  async index(@Path() concurso: string): Promise<any> {
+    return await getMegaSenaResult(
       concurso === 'last' ? MEGA_SENA_API : `${MEGA_SENA_API}/${concurso}`
     )
-
-    return res.json(result)
   }
 }
 

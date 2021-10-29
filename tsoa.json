@@ -1,0 +1,11 @@
+{
+  "entryFile": "api/index.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "spec": {
+    "outputDirectory": "public",
+    "specVersion": 3
+  },
+  "ignore": [
+    "**/node_modules/**"
+  ]
+}
