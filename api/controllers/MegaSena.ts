@@ -1,10 +1,10 @@
-import { VercelResponse } from '@vercel/node'
+import { Response, Request } from 'express'
 
 import getMegaSenaResult from '../services/getMegaSenaResult'
 import { MEGA_SENA_API } from '../constants/api'
 
 class MegaSenaController {
-  async index({ req, res }: { req: any, res: VercelResponse }) {
+  async index(req: Request, res: Response) {
     const concurso = req.params.concurso;
 
     const result = await getMegaSenaResult(
