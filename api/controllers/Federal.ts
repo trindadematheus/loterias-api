@@ -8,7 +8,8 @@ import getFederalResult from '../services/getFederalResult';
 class FederalController {
 
   /**
-   * use 'last' if you want get the last result
+   * @summary Resultado da Federal - Use o número do concurso
+   * especifico ou use 'last' para o último sorteio
    */
   @Get("/:concurso")
   async index(@Path() concurso: string): Promise<any> {

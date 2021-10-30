@@ -8,7 +8,8 @@ import { MEGA_SENA_API } from '../constants/api'
 class MegaSenaController {
 
   /**
-   * use 'last' if you want get the last result
+   * @summary Resultado da Mega Sena - Use o número do concurso
+   * especifico ou use 'last' para o último sorteio
    */
   @Get("/:concurso")
   async index(@Path() concurso: string): Promise<any> {
