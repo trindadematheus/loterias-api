@@ -64,7 +64,7 @@ app.post('/api/hotmart/webhook', async (req, res) => {
       </div>
     `;
 
-    const from = "Quaresma Transformadora <nao-responda@melhoresprodutosdigitaisbr.com.br";
+    const from = "Quaresma Transformadora <nao-responda@melhoresprodutosdigitaisbr.com.br>";
     
     const result = await resend.emails.send({
       from,
