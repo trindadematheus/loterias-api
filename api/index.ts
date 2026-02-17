@@ -39,7 +39,7 @@ app.get('/api/federal/:concurso', async (req, res) => {
 
 app.post('/api/hotmart/webhook', async (req, res) => {
   try {
-    const data = req.body;
+    const {data} = req.body;
 
     // do jeito que você pediu
     const email = data.buyer?.email;
