@@ -14,6 +14,7 @@ const resend = new Resend("re_ZoYYe27R_9FGY9VEokbPpfs58iYUo4QmC");
 
 app.use(express.static("public"));
 app.use(morgan("tiny"));
+app.use(express.json());
 app.use(
   "/api/docs",
   swaggerUi.serve,
