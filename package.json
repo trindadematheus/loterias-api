@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "morgan": "^1.10.0",
     "swagger-ui-express": "^4.1.6",
-    "tsoa": "^3.13.0"
+    "tsoa": "^3.13.0",
+    "resend": "^4.0.0"
   }
 }
